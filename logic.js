@@ -3,9 +3,13 @@ let submitBtn = document.getElementById("submitBtn");
 let humanChoiceText = document.getElementById("options");
 let computerChoiceText = document.getElementById("computer-choice");
 let resultText = document.getElementById("round-winner");
-let roundNumber = document.getElementById("round-number");
+let roundNumberText = document.getElementById("round-number");
+let roundNumber = 1;
 let humanScore = 0;
 let computerScore = 0;
+let humanScoreText = document.getElementById("human-score");
+let computerScoreText = document.getElementById("computer-score");
+
 
 submitBtn.addEventListener("click", () => {
     
@@ -35,20 +39,25 @@ function playRound(humanChoice, computerChoice) {
             break;
     }
 
+    roundNumber++;
+    roundNumberText.textContent = `Round ${roundNumber}`;
+    computerScoreText.textContent = computerScore.toString();
+    humanScoreText.textContent = humanScore.toString();
 }
 
 
 function paperAgainst(computerChoice) {
-    resultText.textContent.replaceAll("");
     switch (computerChoice) {
         case "paper":
             resultText.textContent = "Draw!";
             break;
         case "rock":
             resultText.textContent = `You win! Paper beats ${toTitleCase(computerChoice)}.`;
+            humanScore++;
             break;
         case "scissors":
             resultText.textContent = `You lose! ${toTitleCase(computerChoice)} beats Paper.`;
+            computerScore++;
             break;
     }
 }
@@ -58,12 +67,14 @@ function rockAgainst(computerChoice) {
     switch (computerChoice) {
         case "paper":
             resultText.textContent = `You lose! ${toTitleCase(computerChoice)} beats Rock.`;
+            computerScore++;
             break;
         case "rock":
             resultText.textContent = "Draw!";
             break;
         case "scissors":
             resultText.textContent = `You win! Rock beats ${toTitleCase(computerChoice)}.`;
+            humanScore++;
             break;
     }
 }
@@ -73,9 +84,11 @@ function scissorsAgainst(computerChoice) {
     switch (computerChoice) {
         case "paper":
             resultText.textContent = `You win! Scissors beats ${toTitleCase(computerChoice)}.`;
+            humanScore++;
             break;
         case "rock":
             resultText.textContent = `You lose! ${toTitleCase(computerChoice)} beats Scissors.`;
+            computerScore++;
             break;
         case "scissors":
             resultText.textContent = "Draw!";
