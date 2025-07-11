@@ -1,5 +1,6 @@
 let restartBtn = document.getElementById("restartBtn");
 let submitBtn = document.getElementById("submitBtn");
+let playBtn = document.getElementById("playBtn");
 let humanChoiceText = document.getElementById("options");
 let computerChoiceText = document.getElementById("computer-choice");
 let resultText = document.getElementById("round-winner");
@@ -16,11 +17,25 @@ let gameWinnerText = document.getElementById("game-winner");
 
 submitBtn.addEventListener("click", () => {
     playRound(getHumanChoice(), getComputerChoice());
-    setTimeout(toNextRound, 1500);
+    if (roundNumber < 5) {
+        setTimeout(toNextRound, 1500);
+    }
 })
 
+playBtn.addEventListener("click", () => playGame());
+
+
+function playGame() {
+    let allElements = document.querySelectorAll("* :not(#playBtn)");
+    allElements.forEach((element) => {
+        element.style.visibility = "visible";
+    })
+    playBtn.remove();
+    restartBtn.style.visibility = "hidden";
+}
 
 function playRound(humanChoice, computerChoice) {
+    submitBtn.disabled = true;
     humanChoice = humanChoice.toLowerCase();
 
     computerChoiceText.textContent = toTitleCase(computerChoice);
@@ -36,10 +51,38 @@ function playRound(humanChoice, computerChoice) {
             scissorsAgainst(computerChoice);
             break;
     }
+
+    if (roundNumber >= 5) {
+        computerScoreText.textContent = computerScore.toString();
+        humanScoreText.textContent = humanScore.toString();
+        drawScoreText.textContent = drawScore.toString();
+        submitBtn.style.visibility = "hidden";
+        restartBtn.style.visibility = "visible";
+        displayWinner(humanScore, computerScore);
+        restartBtn.addEventListener("click", () => {
+            restartGame();
+        })
+    }
+}
+
+
+function restartGame() {
+    humanScore = computerScore = drawScore = 0;
+    roundNumber = 1;
+    roundNumberText.textContent = `Round ${roundNumber}`;
+    computerScoreText.textContent = computerScore.toString();
+    humanScoreText.textContent = humanScore.toString();
+    drawScoreText.textContent = drawScore.toString();
+    computerChoiceText.textContent = "";
+    resultText.textContent = "";
+    gameWinnerText.textContent = "";
+    submitBtn.disabled = false;
+    playGame();
 }
 
 
 function toNextRound() {
+    submitBtn.disabled = false;
     resultText.textContent = "";
     computerChoiceText.textContent = "";
     roundNumber++;
@@ -47,6 +90,17 @@ function toNextRound() {
     computerScoreText.textContent = computerScore.toString();
     humanScoreText.textContent = humanScore.toString();
     drawScoreText.textContent = drawScore.toString();
+}
+
+
+function displayWinner(humanScore, computerScore) {
+    if (humanScore > computerScore) {
+        gameWinnerText.textContent = `Player won the game!`;
+    } else if (humanScore < computerScore) {
+        gameWinnerText.textContent = `Computer won the game!`;
+    } else {
+        gameWinnerText.textContent = `It's a draw!`;
+    }
 }
 
 
