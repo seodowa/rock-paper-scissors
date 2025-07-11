@@ -7,18 +7,16 @@ let roundNumberText = document.getElementById("round-number");
 let roundNumber = 1;
 let humanScore = 0;
 let computerScore = 0;
+let drawScore = 0;
 let humanScoreText = document.getElementById("human-score");
 let computerScoreText = document.getElementById("computer-score");
+let drawScoreText = document.getElementById("draw-score");
+let gameWinnerText = document.getElementById("game-winner");
 
 
 submitBtn.addEventListener("click", () => {
-    
-    if (restartBtn.style.visibility === "hidden") {
-        restartBtn.style.visibility = "visible";
-    } else {
-        restartBtn.style.visibility = "hidden";
-    }
     playRound(getHumanChoice(), getComputerChoice());
+    setTimeout(toNextRound, 1500);
 })
 
 
@@ -38,11 +36,17 @@ function playRound(humanChoice, computerChoice) {
             scissorsAgainst(computerChoice);
             break;
     }
+}
 
+
+function toNextRound() {
+    resultText.textContent = "";
+    computerChoiceText.textContent = "";
     roundNumber++;
     roundNumberText.textContent = `Round ${roundNumber}`;
     computerScoreText.textContent = computerScore.toString();
     humanScoreText.textContent = humanScore.toString();
+    drawScoreText.textContent = drawScore.toString();
 }
 
 
@@ -50,6 +54,7 @@ function paperAgainst(computerChoice) {
     switch (computerChoice) {
         case "paper":
             resultText.textContent = "Draw!";
+            drawScore++;
             break;
         case "rock":
             resultText.textContent = `You win! Paper beats ${toTitleCase(computerChoice)}.`;
@@ -71,6 +76,7 @@ function rockAgainst(computerChoice) {
             break;
         case "rock":
             resultText.textContent = "Draw!";
+            drawScore++;
             break;
         case "scissors":
             resultText.textContent = `You win! Rock beats ${toTitleCase(computerChoice)}.`;
@@ -92,6 +98,7 @@ function scissorsAgainst(computerChoice) {
             break;
         case "scissors":
             resultText.textContent = "Draw!";
+            drawScore++;
             break;
     }
 }
