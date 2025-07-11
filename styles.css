@@ -1,0 +1,14 @@
+.computer-score-container, .human-score-container, .computer-choice-container {
+    display: flex;
+}
+
+.computer-score-container, .computer-choice-container {
+    margin-bottom: 16px;
+}
+h2 {
+    margin: 2px 0px;
+}
+
+div p {
+    margin: 4px 4px 4px 0px;
+}

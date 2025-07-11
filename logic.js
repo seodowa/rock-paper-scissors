@@ -1,3 +1,17 @@
+let restartBtn = document.getElementById("restartBtn");
+let submitBtn = document.getElementById("submitBtn");
+
+
+submitBtn.addEventListener("click", () => {
+    
+    if (restartBtn.style.visibility === "hidden") {
+        restartBtn.style.visibility = "visible";
+    } else {
+        restartBtn.style.visibility = "hidden";
+    }
+})
+
+
 function getComputerChoice() {
     let randomNum = Math.ceil(Math.random() * 3)
     switch (randomNum) {
@@ -9,5 +23,3 @@ function getComputerChoice() {
             return "Scissors";
     }
 }
-
-console.log(getComputerChoice());
