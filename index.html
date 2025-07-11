@@ -20,9 +20,9 @@
         
         <label for="options">Select option: </label>
         <select id="options" inputmode="ra">
-            <option id="rock">Rock</option>
-            <option id="paper">Paper</option>
-            <option id="scissors">Scissors</option>
+            <option value="rock" selected>Rock</option>
+            <option value="paper">Paper</option>
+            <option value="scissors">Scissors</option>
         </select>
 
         <div class="computer-choice-container">
@@ -34,7 +34,7 @@
 
         <div class="buttons">
             <button id="submitBtn">Submit</button>
-            <button id="restartBtn">Play Again</button>
+            <button id="restartBtn" hidden>Play Again</button>
         </div>
 
        <script src="logic.js"></script> 

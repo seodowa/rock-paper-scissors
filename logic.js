@@ -1,6 +1,8 @@
 let restartBtn = document.getElementById("restartBtn");
 let submitBtn = document.getElementById("submitBtn");
-
+let humanChoice = document.getElementById("options");
+let humanScore = 0;
+let computerScore = 0;
 
 submitBtn.addEventListener("click", () => {
     
@@ -9,7 +11,18 @@ submitBtn.addEventListener("click", () => {
     } else {
         restartBtn.style.visibility = "hidden";
     }
+    console.log(getHumanChoice());
 })
+
+
+function playRound() {
+    
+}
+
+
+function getHumanChoice() {
+    return humanChoice.value;
+}
 
 
 function getComputerChoice() {
