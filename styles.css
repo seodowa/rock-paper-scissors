@@ -1,5 +1,31 @@
-body :not(#playBtn):not(h2) {
-    visibility: hidden;
+body {
+    display: flex;
+    justify-content: center;
+    background-color: rgb(194, 194, 194);
+    margin: 0px;
+    padding: 3%
+}
+
+.universal-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    border-radius: 5%;
+    height: auto;
+    width: 30%;
+    margin: 0px;
+    padding: 2%;
+}
+
+#playBtn {
+    align-self: center;
+}
+
+#options {
+    display: flex;
+    list-style-type: none;
+    gap: 2%;
 }
 
 .computer-score-container, .human-score-container, .computer-choice-container, .draw-score-container {

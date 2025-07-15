@@ -1,41 +1,66 @@
-let restartBtn = document.getElementById("restartBtn");
-let submitBtn = document.getElementById("submitBtn");
 let playBtn = document.getElementById("playBtn");
-let humanChoiceText = document.getElementById("options");
-let computerChoiceText = document.getElementById("computer-choice");
-let resultText = document.getElementById("round-winner");
-let roundNumberText = document.getElementById("round-number");
 let roundNumber = 1;
 let humanScore = 0;
 let computerScore = 0;
 let drawScore = 0;
-let humanScoreText = document.getElementById("human-score");
-let computerScoreText = document.getElementById("computer-score");
-let drawScoreText = document.getElementById("draw-score");
-let gameWinnerText = document.getElementById("game-winner");
 
+let restartBtn = null;
+let playerChoiceRock = null;
+let playerChoicePaper = null;
+let playerChoiceScissors = null;
+let computerChoiceText = null;
+let resultText = null;
+let roundNumberText = null;
 
-submitBtn.addEventListener("click", () => {
-    playRound(getHumanChoice(), getComputerChoice());
-    if (roundNumber < 5) {
-        setTimeout(toNextRound, 1500);
-    }
-})
+let humanScoreText = null;
+let computerScoreText = null;
+let drawScoreText = null;
+let gameWinnerText = null;
 
 playBtn.addEventListener("click", () => playGame());
 
 
 function playGame() {
-    let allElements = document.querySelectorAll("* :not(#playBtn)");
-    allElements.forEach((element) => {
-        element.style.visibility = "visible";
-    })
+    let template = document.querySelector("template");
+    let container = document.querySelector(".universal-container");
+    let clone = template.content.cloneNode(true);
     playBtn.remove();
-    restartBtn.style.visibility = "hidden";
+    container.appendChild(clone);
+
+    instantiateVariables();
+    instantiateEventListeners();
 }
 
+function instantiateVariables() {
+    restartBtn = document.getElementById("restartBtn");
+    restartBtn.style.visibility = "hidden";
+    playerChoiceRock = document.getElementById("rock");
+    playerChoicePaper = document.getElementById("paper");
+    playerChoiceScissors = document.getElementById("scissors");
+    computerChoiceText = document.getElementById("computer-choice");
+    resultText = document.getElementById("round-winner");
+    roundNumberText = document.getElementById("round-number");
+    humanScoreText = document.getElementById("human-score");
+    computerScoreText = document.getElementById("computer-score");
+    drawScoreText = document.getElementById("draw-score");
+    gameWinnerText = document.getElementById("game-winner");
+}
+
+
+function instantiateEventListeners() {
+    playerChoiceRock.addEventListener("click", () => {
+        playRound("rock", getComputerChoice());
+    })
+    playerChoicePaper.addEventListener("click", () => {
+        playRound("paper", getComputerChoice());
+    })
+    playerChoiceScissors.addEventListener("click", () => {
+        playRound("scissors", getComputerChoice());
+    })
+}   
+
 function playRound(humanChoice, computerChoice) {
-    submitBtn.disabled = true;
+    disableButtons(playerChoicePaper, playerChoiceRock, playerChoiceScissors);
     humanChoice = humanChoice.toLowerCase();
 
     computerChoiceText.textContent = toTitleCase(computerChoice);
@@ -52,16 +77,17 @@ function playRound(humanChoice, computerChoice) {
             break;
     }
 
-    if (roundNumber >= 5) {
+    if (isThereAWinner(humanScore, computerScore)) {
         computerScoreText.textContent = computerScore.toString();
         humanScoreText.textContent = humanScore.toString();
         drawScoreText.textContent = drawScore.toString();
-        submitBtn.style.visibility = "hidden";
         restartBtn.style.visibility = "visible";
         displayWinner(humanScore, computerScore);
         restartBtn.addEventListener("click", () => {
             restartGame();
         })
+    } else {
+        setTimeout(toNextRound, 1500);
     }
 }
 
@@ -76,13 +102,13 @@ function restartGame() {
     computerChoiceText.textContent = "";
     resultText.textContent = "";
     gameWinnerText.textContent = "";
-    submitBtn.disabled = false;
-    playGame();
+    enableButtons(playerChoicePaper, playerChoiceRock, playerChoiceScissors);
+    restartBtn.style.visibility = "hidden";
 }
 
 
 function toNextRound() {
-    submitBtn.disabled = false;
+    enableButtons(playerChoicePaper, playerChoiceRock, playerChoiceScissors);
     resultText.textContent = "";
     computerChoiceText.textContent = "";
     roundNumber++;
@@ -158,8 +184,11 @@ function scissorsAgainst(computerChoice) {
 }
 
 
-function getHumanChoice() {
-    return humanChoiceText.value;
+function isThereAWinner(humanScore, computerScore) {
+    if (humanScore >= 5 || computerScore >= 5) {
+        return true;
+    }
+    return false;
 }
 
 
@@ -182,4 +211,18 @@ function toTitleCase(s) {
             .split(' ')
             .map(word => word.charAt(0).toUpperCase() + word.slice(1))
             .join(' ');
+}
+
+
+function enableButtons(...buttons) {
+    buttons.forEach((button) => {
+        button.disabled = false;
+    })
+}
+
+
+function disableButtons(...buttons) {
+    buttons.forEach((button) => {
+        button.disabled = true;
+    })
 }

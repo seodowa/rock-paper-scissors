@@ -5,44 +5,46 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Rock Paper Scissors</title>
         <link rel="stylesheet" href="styles.css">
+       <script src="logic.js" defer></script> 
     </head>
     <body>
-        <h2>Rock Paper Scissors</h2>
-        <button id="playBtn">Play</button>
-        <h3 id="round-number">Round 1</h3>
-        <div class="human-score-container">
-            <p>Human Score: </p>
-            <p id="human-score">0</p>
-        </div>
-        <div class="computer-score-container">
-            <p>Computer Score: </p>
-            <p id="computer-score">0</p>
-        </div>
-        <div class="draw-score-container">
-            <p>Draws: </p>
-            <p id="draw-score">0</p>
-        </div>
-        
-        <label for="options">Select option: </label>
-        <select id="options" inputmode="ra">
-            <option value="rock" selected>Rock</option>
-            <option value="paper">Paper</option>
-            <option value="scissors">Scissors</option>
-        </select>
+        <div class="universal-container">
+            <h2>Rock Paper Scissors</h2>
+            <button id="playBtn">Play</button>
+            <template>
+                <h3 id="round-number">Round 1</h3>
+                <div class="human-score-container">
+                    <p>Human Score: </p>
+                    <p id="human-score">0</p>
+                </div>
+                <div class="computer-score-container">
+                    <p>Computer Score: </p>
+                    <p id="computer-score">0</p>
+                </div>
+                <div class="draw-score-container">
+                    <p>Draws: </p>
+                    <p id="draw-score">0</p>
+                </div>
+                
+                <label for="options">Select option: </label>
+                <ul id="options">
+                    <li><button id="rock" value="rock">Rock</button></li>
+                    <li><button id="paper" value="paper">Paper</button></li>
+                    <li><button id="scissors" value="scissors">Scissors</button></li>
+                </ul>
 
-        <div class="computer-choice-container">
-            <p>The computer chose:</p>
-            <p id="computer-choice"></p>
-        </div>
+                <div class="computer-choice-container">
+                    <p>The computer chose:</p>
+                    <p id="computer-choice"></p>
+                </div>
 
-        <p id="round-winner"></p>
-        <p id="game-winner"></p>
+                <p id="round-winner"></p>
+                <p id="game-winner"></p>
 
-        <div class="buttons">
-            <button id="submitBtn">Submit</button>
-            <button id="restartBtn">Play Again</button>
-        </div>
-
-       <script src="logic.js"></script> 
+                <div class="buttons">
+                    <button id="restartBtn">Play Again</button>
+                </div>
+            </template>    
+        </div>      
     </body>
 </html>
