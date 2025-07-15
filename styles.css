@@ -6,10 +6,6 @@ body {
     padding: 3%
 }
 
-.universal-container :not(#playBtn):not(h2) {
-    visibility: hidden;
-}
-
 .universal-container {
     display: flex;
     flex-direction: column;

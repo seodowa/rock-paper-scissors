@@ -1,42 +1,63 @@
-let restartBtn = document.getElementById("restartBtn");
 let playBtn = document.getElementById("playBtn");
-let playerChoiceRock = document.getElementById("rock");
-let playerChoicePaper = document.getElementById("paper");
-let playerChoiceScissors = document.getElementById("scissors");
-let computerChoiceText = document.getElementById("computer-choice");
-let resultText = document.getElementById("round-winner");
-let roundNumberText = document.getElementById("round-number");
 let roundNumber = 1;
 let humanScore = 0;
 let computerScore = 0;
 let drawScore = 0;
-let humanScoreText = document.getElementById("human-score");
-let computerScoreText = document.getElementById("computer-score");
-let drawScoreText = document.getElementById("draw-score");
-let gameWinnerText = document.getElementById("game-winner");
 
+let restartBtn = null;
+let playerChoiceRock = null;
+let playerChoicePaper = null;
+let playerChoiceScissors = null;
+let computerChoiceText = null;
+let resultText = null;
+let roundNumberText = null;
 
-playerChoiceRock.addEventListener("click", () => {
-    playRound("rock", getComputerChoice());
-})
-playerChoicePaper.addEventListener("click", () => {
-    playRound("paper", getComputerChoice());
-})
-playerChoiceScissors.addEventListener("click", () => {
-    playRound("scissors", getComputerChoice());
-})
+let humanScoreText = null;
+let computerScoreText = null;
+let drawScoreText = null;
+let gameWinnerText = null;
 
 playBtn.addEventListener("click", () => playGame());
 
 
 function playGame() {
-    let allElements = document.querySelectorAll("div.universal-container :not(#playBtn)");
-    allElements.forEach((element) => {
-        element.style.visibility = "visible";
-    })
+    let template = document.querySelector("template");
+    let container = document.querySelector(".universal-container");
+    let clone = template.content.cloneNode(true);
     playBtn.remove();
-    restartBtn.style.visibility = "hidden";
+    container.appendChild(clone);
+
+    instantiateVariables();
+    instantiateEventListeners();
 }
+
+function instantiateVariables() {
+    restartBtn = document.getElementById("restartBtn");
+    restartBtn.style.visibility = "hidden";
+    playerChoiceRock = document.getElementById("rock");
+    playerChoicePaper = document.getElementById("paper");
+    playerChoiceScissors = document.getElementById("scissors");
+    computerChoiceText = document.getElementById("computer-choice");
+    resultText = document.getElementById("round-winner");
+    roundNumberText = document.getElementById("round-number");
+    humanScoreText = document.getElementById("human-score");
+    computerScoreText = document.getElementById("computer-score");
+    drawScoreText = document.getElementById("draw-score");
+    gameWinnerText = document.getElementById("game-winner");
+}
+
+
+function instantiateEventListeners() {
+    playerChoiceRock.addEventListener("click", () => {
+        playRound("rock", getComputerChoice());
+    })
+    playerChoicePaper.addEventListener("click", () => {
+        playRound("paper", getComputerChoice());
+    })
+    playerChoiceScissors.addEventListener("click", () => {
+        playRound("scissors", getComputerChoice());
+    })
+}   
 
 function playRound(humanChoice, computerChoice) {
     disableButtons(playerChoicePaper, playerChoiceRock, playerChoiceScissors);
@@ -56,7 +77,7 @@ function playRound(humanChoice, computerChoice) {
             break;
     }
 
-    if (roundNumber >= 5) {
+    if (isThereAWinner(humanScore, computerScore)) {
         computerScoreText.textContent = computerScore.toString();
         humanScoreText.textContent = humanScore.toString();
         drawScoreText.textContent = drawScore.toString();
@@ -82,7 +103,7 @@ function restartGame() {
     resultText.textContent = "";
     gameWinnerText.textContent = "";
     enableButtons(playerChoicePaper, playerChoiceRock, playerChoiceScissors);
-    playGame();
+    restartBtn.style.visibility = "hidden";
 }
 
 
@@ -163,8 +184,11 @@ function scissorsAgainst(computerChoice) {
 }
 
 
-function getHumanChoice() {
-    return humanChoiceText.value;
+function isThereAWinner(humanScore, computerScore) {
+    if (humanScore >= 5 || computerScore >= 5) {
+        return true;
+    }
+    return false;
 }
 
 
