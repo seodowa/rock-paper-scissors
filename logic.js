@@ -1,7 +1,8 @@
 let restartBtn = document.getElementById("restartBtn");
-let submitBtn = document.getElementById("submitBtn");
 let playBtn = document.getElementById("playBtn");
-let humanChoiceText = document.getElementById("options");
+let playerChoiceRock = document.getElementById("rock");
+let playerChoicePaper = document.getElementById("paper");
+let playerChoiceScissors = document.getElementById("scissors");
 let computerChoiceText = document.getElementById("computer-choice");
 let resultText = document.getElementById("round-winner");
 let roundNumberText = document.getElementById("round-number");
@@ -15,18 +16,21 @@ let drawScoreText = document.getElementById("draw-score");
 let gameWinnerText = document.getElementById("game-winner");
 
 
-submitBtn.addEventListener("click", () => {
-    playRound(getHumanChoice(), getComputerChoice());
-    if (roundNumber < 5) {
-        setTimeout(toNextRound, 1500);
-    }
+playerChoiceRock.addEventListener("click", () => {
+    playRound("rock", getComputerChoice());
+})
+playerChoicePaper.addEventListener("click", () => {
+    playRound("paper", getComputerChoice());
+})
+playerChoiceScissors.addEventListener("click", () => {
+    playRound("scissors", getComputerChoice());
 })
 
 playBtn.addEventListener("click", () => playGame());
 
 
 function playGame() {
-    let allElements = document.querySelectorAll("* :not(#playBtn)");
+    let allElements = document.querySelectorAll("div.universal-container :not(#playBtn)");
     allElements.forEach((element) => {
         element.style.visibility = "visible";
     })
@@ -35,7 +39,6 @@ function playGame() {
 }
 
 function playRound(humanChoice, computerChoice) {
-    submitBtn.disabled = true;
     humanChoice = humanChoice.toLowerCase();
 
     computerChoiceText.textContent = toTitleCase(computerChoice);
@@ -62,6 +65,8 @@ function playRound(humanChoice, computerChoice) {
         restartBtn.addEventListener("click", () => {
             restartGame();
         })
+    } else {
+        setTimeout(toNextRound, 1500);
     }
 }
 
@@ -82,7 +87,6 @@ function restartGame() {
 
 
 function toNextRound() {
-    submitBtn.disabled = false;
     resultText.textContent = "";
     computerChoiceText.textContent = "";
     roundNumber++;
