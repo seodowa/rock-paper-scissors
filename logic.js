@@ -39,6 +39,7 @@ function playGame() {
 }
 
 function playRound(humanChoice, computerChoice) {
+    disableButtons(playerChoicePaper, playerChoiceRock, playerChoiceScissors);
     humanChoice = humanChoice.toLowerCase();
 
     computerChoiceText.textContent = toTitleCase(computerChoice);
@@ -59,7 +60,6 @@ function playRound(humanChoice, computerChoice) {
         computerScoreText.textContent = computerScore.toString();
         humanScoreText.textContent = humanScore.toString();
         drawScoreText.textContent = drawScore.toString();
-        submitBtn.style.visibility = "hidden";
         restartBtn.style.visibility = "visible";
         displayWinner(humanScore, computerScore);
         restartBtn.addEventListener("click", () => {
@@ -81,12 +81,13 @@ function restartGame() {
     computerChoiceText.textContent = "";
     resultText.textContent = "";
     gameWinnerText.textContent = "";
-    submitBtn.disabled = false;
+    enableButtons(playerChoicePaper, playerChoiceRock, playerChoiceScissors);
     playGame();
 }
 
 
 function toNextRound() {
+    enableButtons(playerChoicePaper, playerChoiceRock, playerChoiceScissors);
     resultText.textContent = "";
     computerChoiceText.textContent = "";
     roundNumber++;
@@ -186,4 +187,18 @@ function toTitleCase(s) {
             .split(' ')
             .map(word => word.charAt(0).toUpperCase() + word.slice(1))
             .join(' ');
+}
+
+
+function enableButtons(...buttons) {
+    buttons.forEach((button) => {
+        button.disabled = false;
+    })
+}
+
+
+function disableButtons(...buttons) {
+    buttons.forEach((button) => {
+        button.disabled = true;
+    })
 }
